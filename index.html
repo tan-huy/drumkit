@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>JS Drum Kit</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+
+    <div class="keys">
+        <div data-key="65" class="key">
+            <kbd>A</kbd>
+            <span class="sound">ClHat</span>
+        </div>
+        <div data-key="83" class="key">
+            <kbd>S</kbd>
+            <span class="sound">Kick01</span>
+        </div>
+        <div data-key="68" class="key">
+            <kbd>D</kbd>
+            <span class="sound">OpHat01</span>
+        </div>
+        <div data-key="70" class="key">
+            <kbd>F</kbd>
+            <span class="sound">OpHat02</span>
+        </div>
+        <div data-key="71" class="key">
+            <kbd>G</kbd>
+            <span class="sound">Snr01</span>
+        </div>
+        <div data-key="72" class="key">
+            <kbd>H</kbd>
+            <span class="sound">Snr02</span>
+        </div>
+        <div data-key="74" class="key">
+            <kbd>J</kbd>
+            <span class="sound">Snr03</span>
+        </div>
+        <div data-key="75" class="key">
+            <kbd>K</kbd>
+            <span class="sound">Snr04</span>
+        </div>
+        <div data-key="76" class="key">
+            <kbd>L</kbd>
+            <span class="sound">SnrBuzz</span>
+        </div>
+    </div>
+
+    <audio data-key="65" src="Kit 18 - Acoustic/CYCdh_K6-ClHat.wav"></audio>
+    <audio data-key="83" src="Kit 18 - Acoustic/CYCdh_K6-Kick01.wav"></audio>
+    <audio data-key="68" src="Kit 18 - Acoustic/CYCdh_K6-OpHat01.wav"></audio>
+    <audio data-key="70" src="Kit 18 - Acoustic/CYCdh_K6-OpHat02.wav"></audio>
+    <audio data-key="71" src="Kit 18 - Acoustic/CYCdh_K6-Snr01.wav"></audio>
+    <audio data-key="72" src="Kit 18 - Acoustic/CYCdh_K6-Snr02.wav"></audio>
+    <audio data-key="74" src="Kit 18 - Acoustic/CYCdh_K6-Snr03.wav"></audio>
+    <audio data-key="75" src="Kit 18 - Acoustic/CYCdh_K6-Snr04.wav"></audio>
+    <audio data-key="76" src="Kit 18 - Acoustic/CYCdh_K6-SnrBuzz.wav"></audio>
+
+    <script>
+        function removeTransition(e) {
+            if (e.propertyName !== 'transform') return; // skip it if it's not a transform
+            e.target.classList.remove('playing');
+        }
+
+        function playSound(e) {
+            const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+            const key = document.querySelector(`div[data-key="${e.keyCode}"]`);
+            if (!audio) return; // stop the function from running all together
+
+            key.classList.add('playing');
+            audio.currentTime = 0; // rewind to start
+            audio.play();
+        }
+
+        const keys = Array.from(document.querySelectorAll('.key'));
+        keys.forEach(key => key.addEventListener('transitionend', removeTransition));
+        window.addEventListener('keydown', playSound);
+    </script>
+
+
+</body>
+
+</html>
